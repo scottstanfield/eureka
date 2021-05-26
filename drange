@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -Eeo pipefail
+
+die()     { ret=$?; printf "%s\n" "$@" >&2; exit "$ret"; }
+
+(( $# ))  || die "Usage: drange YYYYMMDD [YYYMMDD]"
+d1=$1
+d2=${2:-$d1} || d2=$d1
+
+until [[ $d1 > $d2 ]]; do
+    echo $d1
+    d1=$(date -d "$d1 +1 day" +"%Y%m%d")
+done
