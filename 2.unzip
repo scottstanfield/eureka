@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-DST=/mnt/fec/build/fec
+DST=$PWD/fec
 rm -rf $DST
 mkdir -p $DST 2> /dev/null
 parallel --bar unzip -qq -d $DST/{/.} {} ::: zips/*.zip

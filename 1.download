@@ -1,20 +1,12 @@
 #!/bin/bash
-set -o nounset          # error out if we use an unassigned variable
-
-DST=/mnt/fec/build/zips
-
-rm $DST/2021033*.zip
 
 args="--show-progress \
     --append-output=/tmp/fec.log \
-    --directory-prefix=$DST "
+    --directory-prefix=zips"
 
 url="https://cg-519a459a-0ea3-42c2-b7bc-fa1143481f74.s3-us-gov-west-1.amazonaws.com/bulk-downloads/electronic"
 
 d1=20210315
 d2=20210401
 
-until [[ $d1 > $d2 ]]; do
-    wget $args $url/$d1.zip || echo "$d1 not found"
-    d1=$(date -d "$d1 + 1 day" +"%Y%m%d")
-done
+drange $d1 $d2 | parallel --bar wget $args $url/{}.zip
