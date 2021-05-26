@@ -1,0 +1,2 @@
+# eureka
+Quick CLI Demo
